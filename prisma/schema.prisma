@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "../node_modules/.prisma/client"
+}
+
+generator markdown {
+  provider = "prisma-markdown"
+  output   = "./ERD.md"
+  title    = "Sinchon ICPC Camp ERD"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @default(autoincrement()) @map("user_id")
+  email     String  @unique
+  password  String  @db.VarChar(60)
+  name      String
+  posts     Post[]
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model Post {
+  id        Int       @id @default(autoincrement()) @map("post_id")
+  title     String
+  content   String?   @db.VarChar(4000)
+  published Boolean   @default(true)
+  authorId  Int       @map("author_id")
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  createdAt DateTime  @default(now()) @map("created_at")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement()) @map("comment_id")
+  content   String   @db.VarChar(800)
+  createdAt DateTime @default(now()) @map("created_at")
+  postId    Int      @map("post_id")
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+}

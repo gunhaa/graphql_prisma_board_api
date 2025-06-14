@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: ${CONTAINER_NAME}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_ID}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    ports:
+      - "${EXPOSE_DB_PORT}:3306"
+    networks:
+      - bold9-net
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+
+networks:
+  bold9-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local

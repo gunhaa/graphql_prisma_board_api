@@ -1,0 +1,6 @@
+node_modules
+coverage-e2e
+coverage-unit
+docs
+images
+__tests__
