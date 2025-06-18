@@ -60,7 +60,7 @@ const createApolloServer = async (): Promise<CreateServerResult> => {
   );
 
   app.all('*', (_: Request, res: Response) => {
-    res.send('BOLD9 Assignment Server, Use /graphql endpoint.');
+    res.send('Use /graphql endpoint.');
   });
 
   return {
